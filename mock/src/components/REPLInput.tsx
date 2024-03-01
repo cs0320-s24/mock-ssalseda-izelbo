@@ -86,12 +86,16 @@ export function REPLInput(props: REPLInputProps) {
   }
 
   function changeMode(args: Array<string>): string {
-    if (args.length != 1) {
-      return "Mode should not have an argument.)";
+    if (args.length == 1) {
+      return "Mode should not have an argument.";
     } else {
-      // props.setMode(args[0]);
-      props.setMode(args[0]);
-      return `Mode changed to ${args[0]}`;
+      if (props.mode == "brief") {
+        props.setMode("verbose");
+        return `Mode changed to verbose`;
+      } else {
+        props.setMode("brief");
+        return `Mode changed to brief`;
+      }
     }
   }
 

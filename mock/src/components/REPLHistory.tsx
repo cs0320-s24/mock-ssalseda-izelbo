@@ -15,9 +15,7 @@ export function REPLHistory(props: REPLHistoryProps) {
     <div className="repl-history">
       {props.history.map((command, index) => (
         <div key={index}>
-          {(props.mode === "verbose" || props.mode === "v") && (
-            <p>Command: {command[0]}</p>
-          )}
+          {props.mode === "verbose" && <p>Command: {command[0]}</p>}
           {typeof command[1] === "string" && <p>Output: {command[1]}</p>}
           {Array.isArray(command[1]) && command[1].length > 0 && (
             <div className="history-item">
