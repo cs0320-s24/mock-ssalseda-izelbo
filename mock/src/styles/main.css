@@ -19,13 +19,27 @@
   align-items: center;
 }
 
+.history-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.history-item table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .repl-input {
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   height: 10vh;
+
 }
 .repl-command-box {
-  width: 90%;
-  margin: auto;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
   display: block;
 }
 button {

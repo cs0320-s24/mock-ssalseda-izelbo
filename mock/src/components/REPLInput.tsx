@@ -103,6 +103,7 @@ export function REPLInput(props: REPLInputProps) {
     console.log(commandInput(commandString));
     const split = commandString.split(" ");
     const commandList: tupleList = [split[0], commandInput(commandString)];
+    commandString && setCommandString("");
 
     props.setHistory([...props.history, commandList]);
   }
