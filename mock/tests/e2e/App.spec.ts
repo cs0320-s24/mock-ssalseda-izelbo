@@ -159,8 +159,8 @@ test("Searching files by different methods", async ({ page }) => {
   const replHistoryTextPost = await page.textContent(".repl-history");
   expect(replHistoryTextPost).toContain(
     "Output: The file 'standard' was successfully loadedOutput: 90249755MadisonTXUSA69738631FranklinTXUSA24321394DallasTXUSA"
-  ); // second load and search
-
+  );
+  // second load and search
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load malformed");
   await page.click('button:has-text("Submit")');
@@ -220,6 +220,8 @@ test("All ill commands and confirming proper error printing", async ({
   await page.click('button:has-text("Submit")'); // checks for presence of all unique errors.
 
   const replHistoryText = await page.textContent(".repl-history");
+
+  // Confirming that every unique error message has been added to the history
   expect(replHistoryText).toContain("Output: The file 'DNE' not found");
   expect(replHistoryText).toContain(
     "Output: Invalid args: load_file should have one argument (example: load_file <filename>)"

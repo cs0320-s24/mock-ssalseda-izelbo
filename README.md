@@ -9,6 +9,8 @@ repo link: https://github.com/cs0320-s24/mock-ssalseda-izelbo
 
 # Design Choices
 
+One of the primary design choices that affected our implementation of mock is the mocking itself. Instead of returning real results for queries of load and search, our inputs only return mocked data. Our program handles this through the use of a mocked.ts file which contains dictionaries which map input terms to results. This allows us to bypass any needed implementation of the csv functions. App is highest level component and manages login status and the repl. The user starts on the login screen which is handled by the LoginScreen file. After logging in we move to the REPLinput file which controls the users interactions post-login. The REPL file manages the props in this file and in REPLHistory. ControlledInput controls the inputs to the REPLInput. Once inputs have been processed into REPLInput, this class directs the execution of the command to one of the commands extending the ICommand interface, this allows for more developer freedom with implementation, instead of being restricted by a defined list of commands existing. The result of the execution is sent to REPLHistory where it is printed depending on the specification for how it should be handled.
+
 # Errors/Bugs
 
 So far we have encountered no bugs to our knowledge. This may be in part due to our use of only mocked data.
