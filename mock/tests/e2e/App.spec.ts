@@ -40,6 +40,7 @@ test("entering valid credentials logs the user in", async ({ page }) => {
   // Fill in the password input field
   await page.fill('input[name="password"]', "password");
 
+  // proper login
   await page.getByLabel("Login").click();
 
   await expect(page.getByLabel("Sign Out")).toBeVisible();
@@ -53,7 +54,7 @@ test("incorrect credentials don't move forwards", async ({ page }) => {
   await page.fill('input[name="password"]', "wrong");
 
   await page.getByLabel("Login").click();
-
+  // page not progressed
   await expect(page.getByLabel("Sign Out")).not.toBeVisible();
 });
 
@@ -68,27 +69,31 @@ test("loading and viewing different files", async ({ page }) => {
 
   await page.getByLabel("Login").click();
 
-  // Step 2: Interact with the page
-  // Locate the element you are looking for
+  // loading standard file
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load standard");
   const mock_input = `load standard`;
   await expect(page.getByLabel("Command input")).toHaveValue(mock_input);
   await page.click('button:has-text("Submit")');
 
+  // view call
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("view");
   await page.click('button:has-text("Submit")');
 
+  // confirming file has been loaded
   const replHistoryText = await page.textContent(".repl-history");
   expect(replHistoryText).toContain("11223");
 
+  // loading new file to replace
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load malformed");
   await page.click('button:has-text("Submit")');
+  // viewing
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("view");
   await page.click('button:has-text("Submit")');
+  // confirming second file was also successfully produced
   const replHistoryTextPost = await page.textContent(".repl-history");
   expect(replHistoryTextPost).toContain("Sanfrancisco");
 });
@@ -104,27 +109,30 @@ test("Proper Mode Reactions", async ({ page }) => {
 
   await page.getByLabel("Login").click();
 
-  // Step 2: Interact with the page
-  // Locate the element you are looking for
+  // load standard file
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load standard");
   const mock_input = `load standard`;
   await expect(page.getByLabel("Command input")).toHaveValue(mock_input);
   await page.click('button:has-text("Submit")');
 
+  // view and confirm lack of verbose "command"
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("view");
   await page.click('button:has-text("Submit")');
   const replHistoryTextPre = await page.textContent(".repl-history");
   expect(replHistoryTextPre).not.toContain("Command:");
 
+  // enter mode to change
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("mode");
   await page.click('button:has-text("Submit")');
 
+  // confirm verbose mode
   const replHistoryText = await page.textContent(".repl-history");
   expect(replHistoryText).toContain("Command:");
 
+  // switch back and confirm again
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("mode");
   await page.click('button:has-text("Submit")');
@@ -141,24 +149,17 @@ test("Searching files by different methods", async ({ page }) => {
 
   await page.getByLabel("Login").click();
 
-  const search_3: string[][] = [
-    ["902", "49755", "Madison", "TX", "USA"],
-    ["697", "38631", "Franklin", "TX", "USA"],
-    ["243", "21394", "Dallas", "TX", "USA"],
-  ];
-
-  const search_4: string[][] = [["123", "12345", "Springfield", "IL", "USA"]];
-
-  // Step 2: Interact with the page
-  // Locate the element you are looking for
+  // loads file
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load standard");
   await page.click('button:has-text("Submit")');
 
+  // searches file
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("search tx state"); //search_3
   await page.click('button:has-text("Submit")');
 
+  // confirms search is produced
   const replHistoryTextPost = await page.textContent(".repl-history");
   expect(replHistoryTextPost).toContain(
     "Output: The file 'standard' was successfully loadedOutput:90249755MadisonTXUSA69738631FranklinTXUSA24321394DallasTXUSA"
@@ -173,6 +174,7 @@ test("Searching files by different methods", async ({ page }) => {
   await page.getByLabel("Command input").fill("search 12345 1"); //search_4
   await page.click('button:has-text("Submit")');
 
+  // confirms search result
   const replHistoryText = await page.textContent(".repl-history");
   expect(replHistoryText).toContain(
     "Output: The file 'standard' was successfully loadedOutput:90249755MadisonTXUSA69738631FranklinTXUSA24321394DallasTXUSAOutput: The file 'malformed' was successfully loadedOutput:12312345SpringfieldILUSA"
@@ -231,6 +233,7 @@ test("All ill commands and confirming proper error printing", async ({
   await page.getByLabel("Command input").fill("orange");
   await page.click('button:has-text("Submit")');
 
+  // checks for presence of all unique errors.
   const replHistoryText = await page.textContent(".repl-history");
   expect(replHistoryText).toContain("Output: The file 'DNE' not found");
   expect(replHistoryText).toContain(
