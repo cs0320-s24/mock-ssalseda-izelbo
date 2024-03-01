@@ -16,13 +16,18 @@ import { historyArray } from "./REPLHistory";
 export default function REPL() {
   // TODO: Add some kind of shared state that holds all the commands submitted.
   const [history, setHistory] = useState<historyArray>([]);
-
+  const [mode, setMode] = useState<string>("brief");
 
   return (
     <div className="repl">
-      <REPLHistory history={history} />
+      <REPLHistory history={history} mode={mode} /> {/* Pass mode state */}
       <hr></hr>
-      <REPLInput history={history} setHistory={setHistory} />
+      <REPLInput
+        history={history}
+        setHistory={setHistory}
+        mode={mode}
+        setMode={setMode}
+      />
     </div>
   );
 }

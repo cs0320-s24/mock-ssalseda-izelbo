@@ -8,15 +8,34 @@ export type historyArray = tupleList[];
 interface REPLHistoryProps {
   //using a tuple so that we can easily accept a string or an array of strings + command and no command for mode
   history: historyArray;
-  // setHistory: Dispatch<SetStateAction<historyArray>>;
+  mode: string;
 }
 export function REPLHistory(props: REPLHistoryProps) {
   return (
     <div className="repl-history">
-      {/* This is where command history will go */}
-      {/* TODO: To go through all the pushed commands... try the .map() function! */}
       {props.history.map((command, index) => (
-        <p>{command}</p>
+        <div key={index}>
+          {(props.mode === "verbose" || props.mode === "v") && (
+            <p>Command: {command[0]}</p>
+          )}
+          {typeof command[1] === "string" && <p>Output: {command[1]}</p>}
+          {Array.isArray(command[1]) && command[1].length > 0 && (
+            <div className="history-item">
+              <table>
+                <tbody>
+                  <p>Output:</p>
+                  {command[1].map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                      {row.map((cell, cellIndex) => (
+                        <td key={cellIndex}>{cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       ))}
     </div>
   );
