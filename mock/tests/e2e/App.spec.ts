@@ -229,8 +229,7 @@ test("All ill commands and confirming proper error printing", async ({
     "Output: Invalid argument: search should have two arguments (example: search <value> <column> )"
   );
   expect(replHistoryText).toContain("Output: No results for '1 1'");
-  expect(replHistoryText).toContain(
-    "Output: Mode should not have an argument."
-  );
+
+  expect(replHistoryText).toContain("Output: Mode should have no arguments.");
   expect(replHistoryText).toContain("Output: Please enter a valid command");
 });

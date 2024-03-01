@@ -11,6 +11,8 @@ repo link: https://github.com/cs0320-s24/mock-ssalseda-izelbo
 
 # Errors/Bugs
 
+So far we have encountered no bugs to our knowledge. This may be in part due to our use of only mocked data.
+
 # Tests
 
 To run the tests cd into the "mock" directory and run the command "npm run test:e2e" in your terminal
