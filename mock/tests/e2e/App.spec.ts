@@ -205,7 +205,7 @@ test("Searching files by different methods", async ({ page }) => {
 });
 
 /**
- * Testing all ill commands and confirming proper error printing
+ * Testing all commands and confirming proper error printing
  */
 
 test("All ill commands and confirming proper error printing", async ({
