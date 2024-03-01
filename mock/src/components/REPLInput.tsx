@@ -2,18 +2,24 @@ import "../styles/main.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "./ControlledInput";
 import { searchMap, jsonMap } from "../mock_data/mocked";
+import { tupleList } from "./REPLHistory";
 
 let globalCSV: string[][] | null = null;
+type historyArray = tupleList[];
 
 
 interface REPLInputProps {
-  history: string[];
-  setHistory: Dispatch<SetStateAction<string[]>>;
+  history: historyArray;
+  setHistory: Dispatch<SetStateAction<historyArray>>;
 }
 
 export function REPLInput(props: REPLInputProps) {
 
   const [commandString, setCommandString] = useState<string>("");
+
+  const [mode , setMode] = useState<string>("brief");
+
+  //given mode, either display command or don't -- but not here, do this in repl history
 
 
   function commandInput(commandString: string): string | string[][] {
@@ -89,7 +95,7 @@ export function REPLInput(props: REPLInputProps) {
       if (args.length != 1) {
         return "Mode should not have an argument.)";
       } else {
-        //NEED TO IMPLEMENT WITH PROPS
+        setMode(args[0])
         return `Mode changed to ${args[0]}`;
       }
     }
@@ -98,9 +104,12 @@ export function REPLInput(props: REPLInputProps) {
   function handleSubmit(commandString: string) {
     console.log(commandInput(commandString));
 
+    const commandList: tupleList = ["command", commandInput(commandString)];
 
-    props.setHistory([...props.history, commandString]);
+    props.setHistory([...props.history, commandList]);
   }
+
+  
   return (
     <div className="repl-input">
       <fieldset>

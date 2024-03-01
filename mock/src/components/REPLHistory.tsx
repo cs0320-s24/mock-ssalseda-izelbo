@@ -1,7 +1,14 @@
 import "../styles/main.css";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+
+//using a tuple so that we can easily accept a string or an array of strings + command and no command for mode
+export type tupleList = [string, string[][] | string];
+export type historyArray = tupleList[];
 
 interface REPLHistoryProps {
-  history: string[];
+  //using a tuple so that we can easily accept a string or an array of strings + command and no command for mode
+  history: historyArray;
+  // setHistory: Dispatch<SetStateAction<historyArray>>;
 }
 export function REPLHistory(props: REPLHistoryProps) {
   return (
