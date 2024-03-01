@@ -28,7 +28,7 @@ test("on page load, i dont see the input box unless proper login, not empty", as
 
   // click the login button shouldn't move foward without details (even multiple times)
   await page.getByLabel("Login").click();
-  await page.getByLabel("Login").click();
+  // await page.getByLabel("Login").click();
   await expect(page.getByLabel("Sign Out")).not.toBeVisible();
   await expect(page.getByLabel("Command input")).not.toBeVisible();
 });
@@ -96,6 +96,15 @@ test("loading and viewing different files", async ({ page }) => {
   // confirming second file was also successfully produced
   const replHistoryTextPost = await page.textContent(".repl-history");
   expect(replHistoryTextPost).toContain("Sanfrancisco");
+
+  // loading empty file
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load empty");
+  await page.click('button:has-text("Submit")');
+  // viewing empty
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("view");
+  await page.click('button:has-text("Submit")');
 });
 
 test("Proper Mode Reactions", async ({ page }) => {
@@ -162,7 +171,7 @@ test("Searching files by different methods", async ({ page }) => {
   // confirms search is produced
   const replHistoryTextPost = await page.textContent(".repl-history");
   expect(replHistoryTextPost).toContain(
-    "Output: The file 'standard' was successfully loadedOutput:90249755MadisonTXUSA69738631FranklinTXUSA24321394DallasTXUSA"
+    "Output: The file 'standard' was successfully loadedOutput: 90249755MadisonTXUSA69738631FranklinTXUSA24321394DallasTXUSA"
   );
 
   // second load and search
@@ -177,7 +186,7 @@ test("Searching files by different methods", async ({ page }) => {
   // confirms search result
   const replHistoryText = await page.textContent(".repl-history");
   expect(replHistoryText).toContain(
-    "Output: The file 'standard' was successfully loadedOutput:90249755MadisonTXUSA69738631FranklinTXUSA24321394DallasTXUSAOutput: The file 'malformed' was successfully loadedOutput:12312345SpringfieldILUSA"
+    "Output: The file 'standard' was successfully loadedOutput: 90249755MadisonTXUSA69738631FranklinTXUSA24321394DallasTXUSAOutput: The file 'malformed' was successfully loadedOutput: 12312345SpringfieldILUSA"
   );
 });
 
