@@ -6,10 +6,19 @@ export type tupleList = [string, string[][] | string];
 export type historyArray = tupleList[];
 
 interface REPLHistoryProps {
-  //using a tuple so that we can easily accept a string or an array of strings + command and no command for mode
   history: historyArray;
   mode: string;
 }
+
+
+/**
+ * A component that renders a history of commands and their outputs.
+ * 
+ * @param props The properties required to configure the REPLHistory component
+ * @returns A React element that represents a history of commands and their outputs.
+ */
+
+
 export function REPLHistory(props: REPLHistoryProps) {
   return (
     <div className="repl-history">

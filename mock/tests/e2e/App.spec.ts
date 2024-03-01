@@ -10,13 +10,21 @@ import { expect, test } from "@playwright/test";
 
 // If you needed to do something before every test case...
 test.beforeEach("load page", async ({ page }) => {
-  await page.goto("http://localhost:8000/"); // ... you'd put it here. // TODO: Is there something we need to do before every test case to avoid repeating code?
+  await page.goto("http://localhost:8000/"); 
 });
+
+/**
+ * Testing that the page loads and the login button is visible
+ */
 
 test("on page load, i see a login button", async ({ page }) => {
   // Notice: http, not https! Our front-end is not set up for HTTPs.
   await expect(page.getByLabel("Login")).toBeVisible();
 });
+
+/**
+ * Testing that the page loads and the input box is not visible unless logged in
+ */
 
 test("on page load, i dont see the input box unless proper login, not empty", async ({
   page,
@@ -24,10 +32,14 @@ test("on page load, i dont see the input box unless proper login, not empty", as
   await expect(page.getByLabel("Sign Out")).not.toBeVisible();
   await expect(page.getByLabel("Command input")).not.toBeVisible(); // click the login button shouldn't move foward without details (even multiple times)
 
-  await page.getByLabel("Login").click(); // await page.getByLabel("Login").click();
+  await page.getByLabel("Login").click(); 
   await expect(page.getByLabel("Sign Out")).not.toBeVisible();
   await expect(page.getByLabel("Command input")).not.toBeVisible();
 });
+
+/**
+ * Testing valid credentials with log in and log out
+ */
 
 test("entering valid credentials logs the user in, then logging out", async ({
   page,
@@ -54,6 +66,10 @@ test("entering valid credentials logs the user in, then logging out", async ({
   await expect(page.getByLabel("Sign Out")).not.toBeVisible();
 });
 
+/**
+ * Testing invalid credentials with log in
+ */
+
 test("incorrect credentials don't move forwards", async ({ page }) => {
   // Fill in the username input field
   await page.fill('input[name="username"]', "error"); // Fill in the password input field
@@ -63,6 +79,10 @@ test("incorrect credentials don't move forwards", async ({ page }) => {
   await page.getByLabel("Login").click(); // page not progressed
   await expect(page.getByLabel("Sign Out")).not.toBeVisible();
 });
+
+/**
+ * Testing loading and vieing different types of files.
+ */
 
 test("loading and viewing different files", async ({ page }) => {
   // Step 1: Navigate to a URL
@@ -104,6 +124,10 @@ test("loading and viewing different files", async ({ page }) => {
   await page.click('button:has-text("Submit")');
 });
 
+/**
+ * Testing the mode command and making sure it reacts properly
+ */
+
 test("Proper Mode Reactions", async ({ page }) => {
   // Step 1: Navigate to a URL
 
@@ -140,6 +164,11 @@ test("Proper Mode Reactions", async ({ page }) => {
   expect(replHistoryTextPost).not.toContain("Command:");
 });
 
+
+/**
+ * Tetsting the search command and making sure it reacts properly
+ */
+
 test("Searching files by different methods", async ({ page }) => {
   // Fill in the username input field
   await page.fill('input[name="username"]', "admin"); // Fill in the password input field
@@ -174,6 +203,10 @@ test("Searching files by different methods", async ({ page }) => {
     "Output: The file 'standard' was successfully loadedOutput: 90249755MadisonTXUSA69738631FranklinTXUSA24321394DallasTXUSAOutput: The file 'malformed' was successfully loadedOutput: 12312345SpringfieldILUSA"
   );
 });
+
+/**
+ * Testing all ill commands and confirming proper error printing
+ */
 
 test("All ill commands and confirming proper error printing", async ({
   page,

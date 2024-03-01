@@ -6,6 +6,17 @@ interface loginProps {
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>
 }
 
+
+/**
+ * A component that renders a login screen, allowing the user to authenticate themselves.
+ * 
+ * This component displays a login form with username and password fields
+ * 
+ * @param props The properties required for the LoginScreen component.
+ * @returns A React element that represents either a login form or a sign-out button based on the user's authentication state.
+ */
+
+
 export function LoginScreen(props: loginProps) {
 
   const [username, setUsername] = useState<string>('')

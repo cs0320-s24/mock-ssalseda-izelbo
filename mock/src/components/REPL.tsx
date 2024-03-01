@@ -4,14 +4,13 @@ import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
 import { historyArray } from "./REPLHistory";
 
-/* 
-  You'll want to expand this component (and others) for the sprints! Remember 
-  that you can pass "props" as function arguments. If you need to handle state 
-  at a higher level, just move up the hooks and pass the state/setter as a prop.
-  
-  This is a great top level component for the REPL. It's a good idea to have organize all components in a component folder.
-  You don't need to do that for this gearup.
-*/
+/**
+ * A component that renders a REPL interface.
+ * 
+ * This component displays a history of commands and their outputs, and allows the user to enter new commands.
+ * 
+ * @returns A React element that represents a REPL interface.
+ */
 
 export default function REPL() {
   // TODO: Add some kind of shared state that holds all the commands submitted.

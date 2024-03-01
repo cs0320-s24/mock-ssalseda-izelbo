@@ -1,7 +1,6 @@
 import "../styles/main.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "./ControlledInput";
-import { searchMap, jsonMap } from "../mock_data/mocked";
 import { tupleList } from "./REPLHistory";
 import {
   ICommand,
@@ -11,7 +10,6 @@ import {
   ChangeModeCommand,
 } from "./Commands";
 
-let globalCSV: string[][] | null = null;
 type historyArray = tupleList[];
 
 interface REPLInputProps {
@@ -20,6 +18,14 @@ interface REPLInputProps {
   setMode: Dispatch<SetStateAction<string>>;
   setHistory: Dispatch<SetStateAction<historyArray>>;
 }
+
+
+/**
+ * A component that renders an input field for entering commands.
+ * 
+ * @param props The properties required to configure the REPLInput component
+ * @returns A React element that represents an input field for entering commands.
+ */
 
 export function REPLInput(props: REPLInputProps) {
   const [commandString, setCommandString] = useState<string>("");
@@ -39,6 +45,11 @@ export function REPLInput(props: REPLInputProps) {
   };
 
 
+  /**
+   * A function that takes a command string and delegates it to the appropriate command object.
+   * @param commandString The inputed command string
+   * @returns Either the output of the command or an error message
+   */
 
   function commandInput(commandString: string): string | string[][] {
     const split = commandString.split(" ");
@@ -52,6 +63,11 @@ export function REPLInput(props: REPLInputProps) {
       return "Please enter a valid command";
     }
   }
+
+  /**
+   * A function that handles the submission of a command string on button press.
+   * @param commandString The inputed command string
+   */
 
   function handleSubmit(commandString: string) {
     console.log(commandInput(commandString));

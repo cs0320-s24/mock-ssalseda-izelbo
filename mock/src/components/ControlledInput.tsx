@@ -1,18 +1,20 @@
 import "../styles/main.css";
 import { Dispatch, SetStateAction } from "react";
 
-// Remember that parameter names don't necessarily need to overlap;
-// I could use different variable names in the actual function.
 interface ControlledInputProps {
   value: string;
-  // This type comes from React+TypeScript. VSCode can suggest these.
-  //   Concretely, this means "a function that sets a state containing a string"
+
   setValue: Dispatch<SetStateAction<string>>;
   ariaLabel: string;
 }
 
-// Input boxes contain state. We want to make sure React is managing that state,
-//   so we have a special component that wraps the input box.
+
+/**
+ * A component designed for entering commands.
+ * @param props The properties required to configure the ControlledInput component
+ * @returns A React element representing a text input field configured as described by the properties.
+ */
+
 export function ControlledInput({
   value,
   setValue,
